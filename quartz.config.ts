@@ -8,16 +8,16 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Quartz 4",
+    pageTitle: "Nexaria",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "plausible",
     },
-    locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    locale: "ja-JP",
+    baseUrl: "www.atty303.ninja",
+    ignorePatterns: ["private", "templates", ".obsidian", "!(index.md|publish/**|zettelkasten/**)"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
