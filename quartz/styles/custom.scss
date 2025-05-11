@@ -42,16 +42,24 @@ article h2 {
 }
 
 article h3 {
-    color: #E0E0E0;
+    color: #404040;
     border-bottom: var(--lightgray) 1px solid;
     padding-bottom: 0.5rem;
 }
-
+:root[saved-theme="dark"] article h3 {
+    color: #E0E0E0;
+}
 article h4, article h5, article h6 {
+    color: #404040;
+}
+:root[saved-theme="dark"] article h4, article h5, article h6 {
     color: #D0D0D0;
 }
 
 code {
+    color: var(--darkgray);
+}
+:root[saved-theme="dark"] code {
     color: #A5D6A7;
 }
 
