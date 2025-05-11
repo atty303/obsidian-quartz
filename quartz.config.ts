@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Nexaria",
+    pageTitle: "Nexaris",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
@@ -23,9 +23,11 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Schibsted Grotesk",
-        body: "Source Sans Pro",
-        code: "IBM Plex Mono",
+        header: "Inter",
+        body: "Inter",
+        code: "JetBrains Mono",
+        japanese: "M PLUS 2",
+        // japanese: "Kosugi Maru",
       },
       colors: {
         lightMode: {

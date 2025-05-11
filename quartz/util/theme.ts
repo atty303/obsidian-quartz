@@ -29,6 +29,7 @@ export interface Theme {
     header: FontSpecification
     body: FontSpecification
     code: FontSpecification
+    japanese: FontSpecification
   }
   cdnCaching: boolean
   colors: Colors
@@ -86,12 +87,13 @@ function formatFontSpecification(
 }
 
 export function googleFontHref(theme: Theme) {
-  const { header, body, code } = theme.typography
+  const { header, body, code, japanese } = theme.typography
   const headerFont = formatFontSpecification("header", header)
   const bodyFont = formatFontSpecification("body", body)
   const codeFont = formatFontSpecification("code", code)
+  const japaneseFont = formatFontSpecification("header", japanese)
 
-  return `https://fonts.googleapis.com/css2?family=${headerFont}&family=${bodyFont}&family=${codeFont}&display=swap`
+  return `https://fonts.googleapis.com/css2?family=${headerFont}&family=${bodyFont}&family=${codeFont}&family=${japaneseFont}&display=swap`
 }
 
 export function googleFontSubsetHref(theme: Theme, text: string) {
@@ -155,10 +157,10 @@ ${stylesheet.join("\n\n")}
   --highlight: ${theme.colors.lightMode.highlight};
   --textHighlight: ${theme.colors.lightMode.textHighlight};
 
-  --titleFont: "${getFontSpecificationName(theme.typography.title || theme.typography.header)}", ${DEFAULT_SANS_SERIF};
-  --headerFont: "${getFontSpecificationName(theme.typography.header)}", ${DEFAULT_SANS_SERIF};
-  --bodyFont: "${getFontSpecificationName(theme.typography.body)}", ${DEFAULT_SANS_SERIF};
-  --codeFont: "${getFontSpecificationName(theme.typography.code)}", ${DEFAULT_MONO};
+  --titleFont: "${getFontSpecificationName(theme.typography.title || theme.typography.header)}", "${getFontSpecificationName(theme.typography.japanese)}", ${DEFAULT_SANS_SERIF};
+  --headerFont: "${getFontSpecificationName(theme.typography.header)}", "${getFontSpecificationName(theme.typography.japanese)}", ${DEFAULT_SANS_SERIF};
+  --bodyFont: "${getFontSpecificationName(theme.typography.body)}", "${getFontSpecificationName(theme.typography.japanese)}", ${DEFAULT_SANS_SERIF};
+  --codeFont: "${getFontSpecificationName(theme.typography.code)}", "${getFontSpecificationName(theme.typography.japanese)}", ${DEFAULT_MONO};
 }
 
 :root[saved-theme="dark"] {
