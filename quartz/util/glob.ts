@@ -7,7 +7,7 @@ export function toPosixPath(fp: string): string {
 }
 
 export async function glob(
-  pattern: string,
+  pattern: string | string[],
   cwd: string,
   ignorePatterns: string[],
 ): Promise<FilePath[]> {

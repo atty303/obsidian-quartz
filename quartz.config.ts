@@ -17,7 +17,7 @@ const config: QuartzConfig = {
     },
     locale: "ja-JP",
     baseUrl: "www.atty303.ninja",
-    ignorePatterns: ["private", "templates", ".obsidian", "!(index.md|publish/**|zettelkasten/**)"],
+    ignorePatterns: [".quartz/**"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
@@ -75,7 +75,16 @@ const config: QuartzConfig = {
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
-    filters: [Plugin.RemoveDrafts()],
+    filters: [
+      Plugin.RemoveDrafts(),
+      Plugin.OnlyPublish({
+        patterns: [
+          "index.md",
+          "publish/**",
+          "zettelkasten/**",
+        ],
+      })
+       ],
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
