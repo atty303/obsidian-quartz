@@ -1,0 +1,18 @@
+[settings]
+idiomatic_version_file_enable_tools = []
+
+[tools]
+node = "latest"
+
+[tasks.install]
+run = "npm install"
+sources = ["package.json", "package-lock.json"]
+outputs.auto = true
+
+[tasks.build]
+run = "npx quartz build -d .."
+depends = "install"
+
+[tasks.serve]
+run = "npx quartz build -d .. --serve"
+depends = "install"
