@@ -23,6 +23,7 @@ export const defaultContentPageLayout: PageLayout = {
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
+    Component.Profile(),
     Component.Flex({
       components: [
         {

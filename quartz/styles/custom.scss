@@ -30,3 +30,32 @@
 .page > #quartz-body .sidebar.right {
     padding-top: 4rem;
 }
+
+.page-header h1, .page-header .content-meta {
+    padding: 0 1rem;
+    border-left: 4px solid var(--gray);
+}
+
+article h2 {
+    border-bottom: var(--gray) 1px solid;
+    padding-bottom: 0.5rem;
+}
+
+article h3 {
+    color: #E0E0E0;
+    border-bottom: var(--lightgray) 1px solid;
+    padding-bottom: 0.5rem;
+}
+
+article h4, article h5, article h6 {
+    color: #D0D0D0;
+}
+
+code {
+    color: #A5D6A7;
+}
+
+footer {
+    border-top: 1px solid var(--gray);
+    opacity: 0.5;
+}

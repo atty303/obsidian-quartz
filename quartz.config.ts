@@ -44,12 +44,12 @@ const config: QuartzConfig = {
         },
         darkMode: {
           light: "#1A1A1A", //  page background
-          lightgray: "#282828", // borders
+          lightgray: "#424242", // borders
           gray: "#646464", // graph links, heavier borders
           darkgray: "#D0D0D0", // body text
           dark: "#FFFFFF", // header text and icons
           secondary: "#4FC3F7", // link colour, current graph node
-          tertiary: "#A5D6A7", // hover states and visited graph nodes
+          tertiary: "#81D4FA", // hover states and visited graph nodes
           highlight: "rgba(143, 159, 169, 0.15)", // internal link background, highlighted text, highlighted lines of code
           textHighlight: "#b3aa0288", // markdown highlighted text background
         },
