@@ -6,12 +6,7 @@ export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
   afterBody: [],
-  footer: Component.Footer({
-    links: {
-      GitHub: "https://github.com/jackyzha0/quartz",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
-    },
-  }),
+  footer: Component.Footer(),
 }
 
 // components for pages that display a single page (e.g. a single note)
@@ -38,7 +33,18 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.RecentNotes({
+      limit: 3,
+      showTags: false,
+      filter: (page) => page.slug?.startsWith("publish") ?? false,
+    }),
+    Component.Explorer({
+      folderClickBehavior: "collapse",
+      filterFn: (node) => {
+        console.log(node.slug)
+        return node.slug.startsWith("publish")
+      },
+    }),
   ],
   right: [
     Component.Graph(),

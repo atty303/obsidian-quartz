@@ -8,8 +8,8 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Nexaris",
-    pageTitleSuffix: "",
+    pageTitle: "NEXALIS",
+    pageTitleSuffix: " - Nexalis",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
@@ -23,6 +23,7 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
+        title: "Jockey One",
         header: "Inter",
         body: "Inter",
         code: "JetBrains Mono",
@@ -42,15 +43,15 @@ const config: QuartzConfig = {
           textHighlight: "#fff23688",
         },
         darkMode: {
-          light: "#161618",
-          lightgray: "#393639",
-          gray: "#646464",
-          darkgray: "#d4d4d4",
-          dark: "#ebebec",
-          secondary: "#7b97aa",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
-          textHighlight: "#b3aa0288",
+          light: "#1A1A1A", //  page background
+          lightgray: "#282828", // borders
+          gray: "#646464", // graph links, heavier borders
+          darkgray: "#D0D0D0", // body text
+          dark: "#FFFFFF", // header text and icons
+          secondary: "#4FC3F7", // link colour, current graph node
+          tertiary: "#A5D6A7", // hover states and visited graph nodes
+          highlight: "rgba(143, 159, 169, 0.15)", // internal link background, highlighted text, highlighted lines of code
+          textHighlight: "#b3aa0288", // markdown highlighted text background
         },
       },
     },

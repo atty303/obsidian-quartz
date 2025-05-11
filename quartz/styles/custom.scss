@@ -1,3 +1,32 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+.page-title {
+    font-size: 3.5rem;
+    border-bottom: 4px solid var(--secondary);
+}
+.page-title a::before {
+    content: "";
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    position: relative;
+    top: 6px;
+    background-color: var(--secondary);
+    mask-image: url("/static/icon.svg");
+    mask-repeat: no-repeat;
+    mask-size: 3rem;
+    mask-position: left;
+}
+.page-title a:hover {
+    color: var(--secondary) !important;
+}
+
+.page > #quartz-body .page-header {
+    margin-top: 4rem;
+}
+.page > #quartz-body .sidebar {
+    padding-top: 2rem;
+}
+.page > #quartz-body .sidebar.right {
+    padding-top: 4rem;
+}
