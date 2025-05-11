@@ -17,7 +17,7 @@ const config: QuartzConfig = {
     },
     locale: "ja-JP",
     baseUrl: "www.atty303.ninja",
-    ignorePatterns: [".quartz/**"],
+    ignorePatterns: [".quartz/**", "templates/**", "clippings/**"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
