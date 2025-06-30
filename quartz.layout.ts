@@ -37,7 +37,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.RecentNotes({
       limit: 3,
       showTags: false,
-      filter: (page) => page.slug?.startsWith("publish") || page.slug?.startsWith("articles") ?? false,
+      filter: (page) => (page.slug?.startsWith("publish") || page.slug?.startsWith("articles")) ?? false,
     }),
     Component.Explorer({
       folderClickBehavior: "collapse",
