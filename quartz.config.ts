@@ -81,6 +81,7 @@ const config: QuartzConfig = {
       Plugin.OnlyPublish({
         patterns: [
           "index.md",
+          "articles/**",
           "publish/**",
           "zettelkasten/**",
         ],
