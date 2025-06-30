@@ -42,8 +42,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer({
       folderClickBehavior: "collapse",
       filterFn: (node) => {
-        console.log(node.slug)
-        return node.slug.startsWith("publish")
+        return node.slug.startsWith("publish") || node.slug.startsWith("articles")
       },
     }),
   ],
