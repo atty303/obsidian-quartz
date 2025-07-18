@@ -2,7 +2,7 @@
 idiomatic_version_file_enable_tools = []
 
 [tools]
-node = "latest"
+node = "22.16.0"
 
 [tasks.install]
 run = "npm install"
