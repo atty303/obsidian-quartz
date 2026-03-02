@@ -1,0 +1,27 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: Cache database
+        uses: actions/cache@v4
+        with:
+          path: .db
+          key: ${{ runner.os }}-ols-db-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-ols-db-
+
+      - name: Export Vault
+        uses: atty303/obsidian-livesync-cli/actions/export@main
+        with:
+          database-path: .db
+          output-path: content
+          remote-access-key: ${{ secrets.OLS_REMOTE_ACCESS_KEY }}
+          remote-secret-key: ${{ secrets.OLS_REMOTE_SECRET_KEY }}
+          remote-region: ap-northeast-1
+          remote-endpoint: ${{ secrets.OLS_REMOTE_ENDPOINT }}
