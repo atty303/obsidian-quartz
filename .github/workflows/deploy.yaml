@@ -40,3 +40,5 @@ jobs:
 
       - name: Deploy
         run: mise run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
