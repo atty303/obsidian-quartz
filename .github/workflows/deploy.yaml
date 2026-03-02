@@ -2,6 +2,8 @@ name: Deploy to Cloudflare Pages
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
 
 jobs:
   build:
@@ -14,6 +16,14 @@ jobs:
         uses: jdx/mise-action@v2
         with:
           github_token: ${{ github.token }}
+
+      - name: Cache npm packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
 
       - name: Cache database
         uses: actions/cache@v4
