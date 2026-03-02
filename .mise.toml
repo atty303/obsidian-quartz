@@ -3,6 +3,17 @@ idiomatic_version_file_enable_tools = []
 
 [tools]
 node = "22.16.0"
+"github:atty303/obsidian-livesync-cli" = "latest"
+"npm:wrangler" = "latest"
+
+[env]
+OLS_DATABASE_PATH = ".db"
+
+[tasks.sync]
+run = "obsidian-livesync-cli sync"
+
+[tasks.export]
+run = "obsidian-livesync-cli export --output-path content"
 
 [tasks.install]
 run = "npm install"
@@ -10,9 +21,12 @@ sources = ["package.json", "package-lock.json"]
 outputs.auto = true
 
 [tasks.build]
-run = "npx quartz build -d .."
+run = "npx quartz build"
 depends = "install"
 
 [tasks.serve]
-run = "npx quartz build -d .. --serve"
+run = "npx quartz build --serve"
 depends = "install"
+
+[tasks.deploy]
+run = "wrangler deploy"

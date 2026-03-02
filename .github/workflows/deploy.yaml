@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build
     steps:
+      - name: Setup mise
+        uses: jdx/mise-action@v2
+        with:
+          github_token: ${{ github.token }}
+
       - name: Cache database
         uses: actions/cache@v4
         with:
@@ -27,3 +32,9 @@ jobs:
           remote-endpoint: ${{ secrets.OLS_REMOTE_ENDPOINT }}
           remote-bucket: obsidian-personal
           remote-force-path-style: true
+
+      - name: Build
+        run: mise run build
+
+      - name: Deploy
+        run: mise run deploy
