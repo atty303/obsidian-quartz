@@ -3,17 +3,8 @@ idiomatic_version_file_enable_tools = []
 
 [tools]
 node = "22.16.0"
-"github:atty303/obsidian-livesync-cli" = "latest"
 "npm:wrangler" = "latest"
-
-[env]
-OLS_DATABASE_PATH = ".db"
-
-[tasks.sync]
-run = "obsidian-livesync-cli sync"
-
-[tasks.export]
-run = "obsidian-livesync-cli export --output-path content"
+"npm:obsidian-headless" = "latest"
 
 [tasks.install]
 run = "npm install"
@@ -30,3 +21,21 @@ depends = "install"
 
 [tasks.deploy]
 run = "wrangler deploy"
+
+[tasks."ob:login"]
+run = "ob login --email $OBSIDIAN_SYNC_EMAIL --password $OBSIDIAN_SYNC_PASSWORD"
+
+[tasks."ob:token"]
+run = "cat ~/.config/obsidian-headless/auth_token"
+
+[tasks."ob:sync-setup"]
+dir = "content"
+run = [
+    "ob sync-setup --vault 4a537549e8d60a0ff46bd6513cc46293 --device-name obsidian-quartz",
+    "ob sync-config --mode mirror-remote",
+    "ob sync-config",
+]
+
+[tasks."ob:sync"]
+dir = "content"
+run = "ob sync"
