@@ -37,7 +37,8 @@ jobs:
         env:
           OBSIDIAN_TOKEN: ${{ secrets.OBSIDIAN_TOKEN }}
         run: |
-          echo "$OBSIDIAN_TOKEN" > ~/.obsidian-headless/auth_token
+          mkdir -p ~/.config/obsidian-headless
+          echo "$OBSIDIAN_TOKEN" > ~/.config/obsidian-headless/auth_token
           mise run ob:sync-setup
 
       - name: Sync vault
