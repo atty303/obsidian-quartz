@@ -33,12 +33,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-ob-
 
+      - name: Cache vault content
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/content
+          key: ${{ runner.os }}-content-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-content-
+
       - name: Setup vault
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         run: |
           mise run ob:login
-          ob login
           mise run ob:sync-setup
 
       - name: Sync vault
