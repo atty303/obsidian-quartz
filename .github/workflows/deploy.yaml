@@ -45,6 +45,7 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         run: |
+          echo $HOME
           mise run ob:login
           mise run ob:sync-setup
 
