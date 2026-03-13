@@ -28,7 +28,7 @@ jobs:
       - name: Cache obsidian-headless config
         uses: actions/cache@v4
         with:
-          path: ${{ env.HOME }}/.config/obsidian-headless
+          path: /home/runner/.config/obsidian-headless
           key: ${{ runner.os }}-ob-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-ob-
@@ -45,7 +45,6 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         run: |
-          echo $HOME
           mise run ob:login
           mise run ob:sync-setup
 
