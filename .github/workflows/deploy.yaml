@@ -35,12 +35,9 @@ jobs:
 
       - name: Setup vault
         env:
-          OBSIDIAN_TOKEN: ${{ secrets.OBSIDIAN_TOKEN }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         run: |
-          mkdir -p ~/.config/obsidian-headless
-          echo "$OBSIDIAN_TOKEN" > ~/.config/obsidian-headless/auth_token
-          echo "token: $OBSIDIAN_TOKEN"
-          echo "auth_token: $(cat ~/.config/obsidian-headless/auth_token)"
+          mise run ob:login
           ob login
           mise run ob:sync-setup
 

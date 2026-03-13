@@ -5,6 +5,7 @@ idiomatic_version_file_enable_tools = []
 node = "22.16.0"
 "npm:wrangler" = "latest"
 "npm:obsidian-headless" = "latest"
+1password-cli = "latest"
 
 [tasks.install]
 run = "npm install"
@@ -23,10 +24,10 @@ depends = "install"
 run = "wrangler deploy"
 
 [tasks."ob:login"]
-run = "ob login --email $OBSIDIAN_SYNC_EMAIL --password $OBSIDIAN_SYNC_PASSWORD"
-
-[tasks."ob:token"]
-run = "cat ~/.config/obsidian-headless/auth_token"
+run = "op run -- sh -c 'ob login --email $OBSIDIAN_SYNC_EMAIL --password $OBSIDIAN_SYNC_PASSWORD --mfa $OBSIDIAN_SYNC_MFA'"
+env.OBSIDIAN_SYNC_EMAIL = "op://Service/Obsidian/username"
+env.OBSIDIAN_SYNC_PASSWORD = "op://Service/Obsidian/password"
+env.OBSIDIAN_SYNC_MFA = "op://Service/Obsidian/TOTP_rax5uo7xmidqyvv5ggewiaynyq?attribute=otp"
 
 [tasks."ob:sync-setup"]
 dir = "content"
