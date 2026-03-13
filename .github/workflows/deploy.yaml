@@ -39,6 +39,8 @@ jobs:
         run: |
           mkdir -p ~/.config/obsidian-headless
           echo "$OBSIDIAN_TOKEN" > ~/.config/obsidian-headless/auth_token
+          echo "token: $OBSIDIAN_TOKEN"
+          echo "auth_token: $(cat ~/.config/obsidian-headless/auth_token)"
           ob login
           mise run ob:sync-setup
 
