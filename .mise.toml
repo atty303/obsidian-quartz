@@ -39,4 +39,8 @@ run = [
 
 [tasks."ob:sync"]
 dir = "content"
-run = "ob sync"
+run = """
+until ob sync ; do
+   sleep 1
+done
+"""

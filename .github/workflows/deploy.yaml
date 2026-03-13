@@ -42,6 +42,7 @@ jobs:
           mise run ob:sync-setup
 
       - name: Sync vault
+        timeout-minutes: 10
         run: mise run ob:sync
 
       - name: Build
