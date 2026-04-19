@@ -7,9 +7,9 @@ export interface Options {
 
 export const OnlyPublish: QuartzFilterPlugin<Options> = (opts) => ({
   name: "OnlyPublish",
-  shouldPublish(ctx, [_tree, vfile]) {
-    const root = ctx.argv.directory
-    const path = vfile.path.substring(root.length + 1)
-    return (opts?.patterns ?? []).some((pattern) => minimatch(path, pattern));
+  shouldPublish(_ctx, [_tree, vfile]) {
+    const path = vfile.data.relativePath ?? ""
+    const slug = vfile.data.slug ?? ""
+    return (opts?.patterns ?? []).some((pattern) => minimatch(path, pattern) || minimatch(slug, pattern))
   },
 })

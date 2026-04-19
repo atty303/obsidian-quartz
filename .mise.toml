@@ -20,6 +20,10 @@ depends = "install"
 run = "npx quartz build --serve"
 depends = "install"
 
+[tasks.serve-local]
+run = "npx quartz build --serve -d {{env.HOME}}/.local/state/obsidian/Personal"
+depends = "install"
+
 [tasks.deploy]
 run = "wrangler deploy"
 

@@ -23,6 +23,7 @@ export type QuartzTransformerPluginInstance = {
   markdownPlugins?: (ctx: BuildCtx) => PluggableList
   htmlPlugins?: (ctx: BuildCtx) => PluggableList
   externalResources?: ExternalResourcesFn
+  contentTransform?: (ctx: BuildCtx, content: ProcessedContent[]) => ProcessedContent[]
 }
 
 export type QuartzFilterPlugin<Options extends OptionType = undefined> = (

@@ -81,7 +81,11 @@ async function buildQuartz(argv: Argv, mut: Mutex, clientRefresh: () => void) {
   ctx.allFiles = allFiles
   ctx.allSlugs = allFiles.map((fp) => slugifyFilePath(fp as FilePath))
 
-  const parsedFiles = await parseMarkdown(ctx, filePaths)
+  const preParsedFiles = await parseMarkdown(ctx, filePaths)
+  let parsedFiles = preParsedFiles
+  for (const plugin of cfg.plugins.transformers) {
+    if (plugin.contentTransform) parsedFiles = plugin.contentTransform(ctx, parsedFiles)
+  }
   const filteredContent = filterContent(ctx, parsedFiles)
 
   await emitContent(ctx, filteredContent)
@@ -90,7 +94,7 @@ async function buildQuartz(argv: Argv, mut: Mutex, clientRefresh: () => void) {
 
   if (argv.watch) {
     ctx.incremental = true
-    return startWatching(ctx, mut, parsedFiles, clientRefresh)
+    return startWatching(ctx, mut, preParsedFiles, clientRefresh)
   }
 }
 
@@ -248,9 +252,12 @@ async function rebuild(changes: ChangeEvent[], clientRefresh: () => void, buildD
   // update allFiles and then allSlugs with the consistent view of content map
   ctx.allFiles = Array.from(contentMap.keys())
   ctx.allSlugs = ctx.allFiles.map((fp) => slugifyFilePath(fp as FilePath))
-  const processedFiles = Array.from(contentMap.values())
+  let processedFiles = Array.from(contentMap.values())
     .filter((file) => file.type === "markdown")
     .map((file) => file.content)
+  for (const plugin of cfg.plugins.transformers) {
+    if (plugin.contentTransform) processedFiles = plugin.contentTransform(ctx, processedFiles)
+  }
 
   let emittedFiles = 0
   for (const emitter of cfg.plugins.emitters) {
