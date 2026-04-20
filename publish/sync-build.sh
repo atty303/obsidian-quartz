@@ -30,10 +30,11 @@ done
 child_pid=""
 timer_pid=""
 pending=0
+in_ready_burst=0
 stop_requested=0
 
 run_action() {
-  echo "[trigger]" >&2
+  echo "[trigger] $(date)" >&2
   bash -c "$action_cmd"
 }
 
@@ -72,8 +73,13 @@ while :; do
   if IFS= read -r -t 0.1 line <&"${WATCH[0]}"; then
     printf '%s\n' "$line"
     if [[ "$line" == *"$pattern"* ]]; then
-      pending=1
-      schedule_timer
+      if (( ! in_ready_burst )); then
+        pending=1
+        in_ready_burst=1
+        schedule_timer
+      fi
+    else
+      in_ready_burst=0
     fi
   fi
 
