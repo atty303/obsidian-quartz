@@ -6,6 +6,10 @@ node = "22.16.0"
 "npm:wrangler" = "latest"
 "npm:obsidian-headless" = "latest"
 1password-cli = "latest"
+watchexec = "latest"
+
+[vars]
+IMAGE = "ghcr.io/atty303/obsidian-quartz"
 
 [tasks.install]
 run = "npm install"
@@ -44,7 +48,28 @@ run = [
 [tasks."ob:sync"]
 dir = "content"
 run = """
-until ob sync ; do
+until ob sync; do
    sleep 1
 done
+"""
+
+[tasks."container:build"]
+run = "podman build -t {{vars.IMAGE}} . -f publish/Containerfile"
+
+[tasks."container:push"]
+run = "podman push {{vars.IMAGE}}"
+
+[tasks."container:run"]
+run = "podman run --rm -it -e OP_SERVICE_ACCOUNT_TOKEN -e OBSIDIAN_SYNC_EMAIL -e OBSIDIAN_SYNC_PASSWORD -e CLOUDFLARE_API_TOKEN {{vars.IMAGE}}"
+
+[tasks."container:entrypoint"]
+run = [
+    "mise run ob:login",
+    "mise run ob:sync-setup",
+    "mise run container:exec",
+]
+
+[tasks."container:exec"]
+run = """
+exec ${ENTRY_SCRIPT:-./publish/sync-build.sh} --watch 'cd content && until ob sync --continuous; do sleep 1; done' --action 'npx quartz build && wrangler deploy'
 """
