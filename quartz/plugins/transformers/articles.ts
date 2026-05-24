@@ -10,7 +10,7 @@ export interface Options {
 
 const defaultOptions: Options = {
   mapFn: (published, data) =>
-    `articles/${published.getFullYear()}-${(published.getMonth() + 1).toString().padStart(2, "0")}/${data.slug}` as FullSlug,
+    `articles/${published.getFullYear()}-${(published.getMonth() + 1).toString().padStart(2, "0")}/${data.slug?.split("/").pop() ?? ""}` as FullSlug,
 }
 
 export const Articles: QuartzTransformerPlugin<Partial<Options>> = (userOpts) => {
