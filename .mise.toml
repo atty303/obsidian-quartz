@@ -73,3 +73,6 @@ run = [
 run = """
 exec ${ENTRY_SCRIPT:-./publish/sync-build.sh} --watch 'cd content && until ob sync --continuous; do sleep 1; done' --action 'npx quartz build && wrangler deploy'
 """
+
+[tasks.butane]
+run = "podman run --interactive --rm quay.io/coreos/butane:release --pretty --strict < obsidian-quartz.bu > obsidian-quartz.ign"

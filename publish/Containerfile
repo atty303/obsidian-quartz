@@ -23,6 +23,7 @@ COPY . .
 RUN mkdir content
 
 RUN mise trust -a && mise install
+RUN npm install -g obsidian-headless
 
 ENV ENTRY_SCRIPT="/usr/src/app/publish/sync-build.sh"
 
