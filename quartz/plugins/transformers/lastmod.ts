@@ -53,7 +53,7 @@ export const CreatedModifiedDate: QuartzTransformerPlugin<Partial<Options>> = (u
             let published: MaybeDate = undefined
 
             const fp = file.data.relativePath!
-            const fullFp = file.data.filePath!
+            const fullFp = file.data.sourceFilePath ?? file.data.filePath!
             for (const source of opts.priority) {
               if (source === "filesystem") {
                 const st = await fs.promises.stat(fullFp)
@@ -70,7 +70,7 @@ export const CreatedModifiedDate: QuartzTransformerPlugin<Partial<Options>> = (u
                 } catch {
                   console.log(
                     chalk.yellow(
-                      `\nWarning: ${file.data.filePath!} isn't yet tracked by git, dates will be inaccurate`,
+                      `\nWarning: ${fullFp} isn't yet tracked by git, dates will be inaccurate`,
                     ),
                   )
                 }

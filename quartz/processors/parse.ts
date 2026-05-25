@@ -7,16 +7,29 @@ import { Root as HTMLRoot } from "hast"
 import { MarkdownContent, ProcessedContent } from "../plugins/vfile"
 import { PerfTimer } from "../util/perf"
 import { read } from "to-vfile"
-import { FilePath, QUARTZ, slugifyFilePath } from "../util/path"
+import { FilePath, FullSlug, QUARTZ, slugifyFilePath } from "../util/path"
 import path from "path"
 import workerpool, { Promise as WorkerPromise } from "workerpool"
 import { QuartzLogger } from "../util/log"
 import { trace } from "../util/trace"
 import { BuildCtx, WorkerSerializableBuildCtx } from "../util/ctx"
 import chalk from "chalk"
+import { VFile } from "vfile"
 
 export type QuartzMdProcessor = Processor<MDRoot, MDRoot, MDRoot>
 export type QuartzHtmlProcessor = Processor<undefined, MDRoot, HTMLRoot>
+
+export type VirtualMarkdownSource = {
+  kind: "virtual"
+  filePath: FilePath
+  relativePath: FilePath
+  slug: FullSlug
+  value: string
+  sourceFilePath: FilePath
+  sourceRelativePath: FilePath
+}
+
+export type MarkdownSource = FilePath | VirtualMarkdownSource
 
 export function createMdProcessor(ctx: BuildCtx): QuartzMdProcessor {
   const transformers = ctx.cfg.plugins.transformers
@@ -82,14 +95,21 @@ async function transpileWorkerScript() {
   })
 }
 
-export function createFileParser(ctx: BuildCtx, fps: FilePath[]) {
+export function createFileParser(ctx: BuildCtx, fps: MarkdownSource[]) {
   const { argv, cfg } = ctx
   return async (processor: QuartzMdProcessor) => {
     const res: MarkdownContent[] = []
-    for (const fp of fps) {
+    for (const source of fps) {
+      const fp = typeof source === "string" ? source : source.filePath
       try {
         const perf = new PerfTimer()
-        const file = await read(fp)
+        const file =
+          typeof source === "string"
+            ? await read(fp)
+            : new VFile({
+                path: source.filePath,
+                value: source.value,
+              })
 
         // strip leading and trailing whitespace
         file.value = file.value.toString().trim()
@@ -100,9 +120,17 @@ export function createFileParser(ctx: BuildCtx, fps: FilePath[]) {
         }
 
         // base data properties that plugins may use
-        file.data.filePath = file.path as FilePath
-        file.data.relativePath = path.posix.relative(argv.directory, file.path) as FilePath
-        file.data.slug = slugifyFilePath(file.data.relativePath)
+        if (typeof source === "string") {
+          file.data.filePath = file.path as FilePath
+          file.data.relativePath = path.posix.relative(argv.directory, file.path) as FilePath
+          file.data.slug = slugifyFilePath(file.data.relativePath)
+        } else {
+          file.data.filePath = source.filePath
+          file.data.relativePath = source.relativePath
+          file.data.slug = source.slug
+          file.data.sourceFilePath = source.sourceFilePath
+          file.data.sourceRelativePath = source.sourceRelativePath
+        }
 
         const ast = processor.parse(file)
         const newAst = await processor.run(ast, file)
@@ -145,7 +173,10 @@ export function createMarkdownParser(ctx: BuildCtx, mdContent: MarkdownContent[]
 const clamp = (num: number, min: number, max: number) =>
   Math.min(Math.max(Math.round(num), min), max)
 
-export async function parseMarkdown(ctx: BuildCtx, fps: FilePath[]): Promise<ProcessedContent[]> {
+export async function parseMarkdown(
+  ctx: BuildCtx,
+  fps: MarkdownSource[],
+): Promise<ProcessedContent[]> {
   const { argv } = ctx
   const perf = new PerfTimer()
   const log = new QuartzLogger(argv.verbose)

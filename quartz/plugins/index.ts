@@ -52,5 +52,7 @@ declare module "vfile" {
     slug: FullSlug
     filePath: FilePath
     relativePath: FilePath
+    sourceFilePath?: FilePath
+    sourceRelativePath?: FilePath
   }
 }
