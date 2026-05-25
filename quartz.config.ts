@@ -18,7 +18,7 @@ const config: QuartzConfig = {
     locale: "ja-JP",
     baseUrl: "www.atty303.ninja",
     ignorePatterns: [".quartz/**", "templates/**", "clippings/**"],
-    defaultDateType: "modified",
+    defaultDateType: "published",
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
@@ -83,8 +83,6 @@ const config: QuartzConfig = {
         patterns: [
           "index.md",
           "articles/**",
-          "publish/**",
-          "zettelkasten/**",
         ],
       })
        ],

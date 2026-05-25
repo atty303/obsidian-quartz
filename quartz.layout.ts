@@ -35,14 +35,15 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     Component.RecentNotes({
-      limit: 3,
+      limit: 5,
       showTags: false,
-      filter: (page) => (page.slug?.startsWith("publish") || page.slug?.startsWith("articles")) ?? false,
+      filter: (page) => page.slug?.startsWith("articles") ?? false,
     }),
     Component.Explorer({
+      title: "すべての記事",
       folderClickBehavior: "collapse",
       filterFn: (node) => {
-        return node.slug.startsWith("publish") || node.slug.startsWith("articles")
+        return node.slug.startsWith("articles")
       },
     }),
   ],
